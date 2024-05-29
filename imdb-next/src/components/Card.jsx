@@ -13,9 +13,9 @@ export default function Card({ result }) {
             result.backdrop_path || result.poster_path
           }`}
           alt={result.title || result.name}
-          width={500}
-          height={300}
-          className="sm:rounded-t-lg group-hover:opacity-75 transition-opacity duration-300"
+          width={400}
+          height={200}
+          className="sm:rounded-t-lg group-hover:opacity-75 transition-opacity duration-300 object-fit"
         />
         <div className="p-2">
           <p className="line-clamp-2 text-base">{result.overview}</p>
