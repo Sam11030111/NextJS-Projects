@@ -6,19 +6,20 @@ export default async function MoviePage({ params }) {
     `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.API_KEY}`
   );
   const movie = await res.json();
-  console.log(movie);
 
   return (
     <div className="w-full">
       <div className="p-4 md:pt-8 flex flex-col md:flex-row content-center max-w-6xl mx-auto md:space-x-6">
         <Image
+          priority
           src={`https://image.tmdb.org/t/p/original/${
             movie.backdrop_path || movie.poster_path
           }`}
+          alt={movie.title || movie.name}
           width={500}
           height={300}
           className="rounded-lg"
-          style={{ maxWidth: "100%", height: "100%" }}
+          style={{ width: "auto", height: "auto" }}
         />
         <div className="p-2">
           <h2 className="text-lg mb-3 font-bold">
