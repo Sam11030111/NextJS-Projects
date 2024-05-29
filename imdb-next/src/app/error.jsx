@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 export default function error({ error, reset }) {
   return (
     <div className="text-center mt-10">
