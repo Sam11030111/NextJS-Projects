@@ -24,7 +24,7 @@ export default function SearchHeaderOptions() {
           selectTab("All");
         }}
         className={`flex items-center space-x-1 border-b-4 border-transparent active:text-blue-500 cursor-pointer pb-3 px-2 ${
-          pathName === "/search/web" && "text-blue-600 border-blue-600"
+          pathName === "/search/web" && "!text-blue-600 !border-blue-600"
         }`}
       >
         <AiOutlineSearch className="text-md" />
@@ -35,10 +35,10 @@ export default function SearchHeaderOptions() {
           selectTab("Images");
         }}
         className={`flex items-center space-x-1 border-b-4 border-transparent active:text-blue-500 cursor-pointer pb-3 px-2 ${
-          pathName === "/search/image" && "text-blue-600 border-blue-600"
+          pathName === "/search/image" && "!text-blue-600 !border-blue-600"
         }`}
       >
-        <AiOutlineSearch className="text-md" />
+        <AiOutlineCamera className="text-md" />
         <p>Images</p>
       </div>
     </div>
