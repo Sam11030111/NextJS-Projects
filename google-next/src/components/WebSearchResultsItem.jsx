@@ -4,7 +4,7 @@ import Parser from "html-react-parser";
 
 export default function WebSearchResultsItem({ result }) {
   return (
-    <div className="mb-8 max-w-xl" key={result.link}>
+    <div className="mb-8 max-w-xl">
       <div className="group flex flex-col">
         <Link href={result.link}>{result.formattedUrl}</Link>
         <Link

@@ -7,9 +7,13 @@ export default function WebSearchResults({ results }) {
         About {results.searchInformation?.formattedTotalResults} results (
         {results.searchInformation?.formattedSearchTime} seconds)
       </p>
-      {results.items?.map((result) => (
-        <WebSearchResultsItem result={result} />
-      ))}
+      <ul>
+        {results.items?.map((result) => (
+          <li key={result.link}>
+            <WebSearchResultsItem result={result} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
