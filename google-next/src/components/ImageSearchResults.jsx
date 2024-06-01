@@ -1,4 +1,5 @@
 import ImageSearchResultsItem from "./ImageSearchResultsItem";
+import PaginationButton from "./PaginationButton";
 
 export default function ImageSearchResults({ results }) {
   return (
@@ -10,6 +11,9 @@ export default function ImageSearchResults({ results }) {
           </li>
         ))}
       </ul>
+      <div className="ml-16">
+        <PaginationButton />
+      </div>
     </div>
   );
 }

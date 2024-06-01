@@ -4,7 +4,7 @@ export default function ImageSearchResultsItem({ result }) {
   return (
     <div className="mb-8">
       <div className="group">
-        <Link href={result.image.contextLink}>
+        <Link href={result.image.contextLink} as={"image"}>
           <img
             src={result.link}
             alt={result.title}

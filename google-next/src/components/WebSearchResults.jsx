@@ -1,4 +1,5 @@
 import WebSearchResultsItem from "./WebSearchResultsItem";
+import PaginationButton from "./PaginationButton";
 
 export default function WebSearchResults({ results }) {
   return (
@@ -14,6 +15,7 @@ export default function WebSearchResults({ results }) {
           </li>
         ))}
       </ul>
+      <PaginationButton />
     </div>
   );
 }
