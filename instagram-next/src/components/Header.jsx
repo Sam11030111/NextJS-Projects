@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -8,11 +8,66 @@ import Modal from "react-modal";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { HiCamera } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
+import { app } from "@/firebase";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageFileUrl, setImageFileUrl] = useState(null);
+  const [imageIsUploading, setImageIsUploading] = useState(false);
+
+  const filePickerRef = useRef();
+
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
+
+  useEffect(() => {
+    async function uploadImageToStorage() {
+      setImageIsUploading(true);
+
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + "-" + selectedFile.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          console.log(error);
+          setImageIsUploading(false);
+          setImageFileUrl(null);
+          setSelectedFile(null);
+        },
+        async () => {
+          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          setImageFileUrl(downloadUrl);
+          setImageIsUploading(false);
+        }
+      );
+    }
+
+    if (selectedFile) {
+      uploadImageToStorage();
+    }
+  }, [selectedFile]);
+
+  function addImageToPost(event) {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setImageFileUrl(URL.createObjectURL(file));
+    }
+  }
 
   return (
     <div className="shadow-sm border-b sticky top-0 bg-white z-30 p-3">
@@ -71,8 +126,32 @@ export default function Header() {
           onRequestClose={() => setIsOpen(false)}
           ariaHideApp={false}
         >
-          <div className="flex flex-col items-center justify-center h-[100%]">
-            <HiCamera className="text-5xl text-gray-400 cursor-pointer" />
+          <div className="flex flex-col items-center justify-center h-[100%] mt-4">
+            {selectedFile ? (
+              <Image
+                priority
+                src={imageFileUrl}
+                width={300}
+                height={200}
+                alt="selected file"
+                className={`w-full max-h-[250px] object-cover cursor-pointer ${
+                  imageIsUploading ? "animate-pulse" : ""
+                }`}
+                onClick={() => setSelectedFile(null)}
+              />
+            ) : (
+              <HiCamera
+                onClick={() => filePickerRef.current.click()}
+                className="text-5xl text-gray-400 cursor-pointer"
+              />
+            )}
+            <input
+              hidden
+              ref={filePickerRef}
+              type="file"
+              accept="image/*"
+              onChange={addImageToPost}
+            />
             <input
               type="text"
               maxLength="150"
