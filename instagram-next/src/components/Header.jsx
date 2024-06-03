@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -29,6 +30,8 @@ export default function Header() {
   const [imageIsUploading, setImageIsUploading] = useState(false);
   const [postIstUploading, setPostIsUploading] = useState(false);
   const [caption, setCaption] = useState("");
+
+  const router = useRouter();
 
   const filePickerRef = useRef();
 
@@ -82,13 +85,23 @@ export default function Header() {
   async function submitHandler() {
     setPostIsUploading(true);
 
-    await addDoc(collection(db, "posts"), {
-      username: session.user.username,
-      caption,
-      profileImg: session.user.image,
-      image: imageFileUrl,
-      timestamp: serverTimestamp(),
-    });
+    try {
+      const doc = await addDoc(collection(db, "posts"), {
+        username: session.user.username,
+        caption,
+        profileImg: session.user.image,
+        image: imageFileUrl,
+        timestamp: serverTimestamp(),
+      });
+
+      if (!doc) {
+        throw new Error("Could not fetch data!");
+      }
+
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    }
 
     setPostIsUploading(false);
     setIsOpen(false);
