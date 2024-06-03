@@ -15,17 +15,27 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import {
+  addDoc,
+  collection,
+  getFirestore,
+  serverTimestamp,
+} from "firebase/firestore";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageIsUploading, setImageIsUploading] = useState(false);
+  const [postIstUploading, setPostIsUploading] = useState(false);
+  const [caption, setCaption] = useState("");
 
   const filePickerRef = useRef();
 
   const { data: session } = useSession();
   // console.log(session);
+
+  const db = getFirestore(app);
 
   useEffect(() => {
     async function uploadImageToStorage() {
@@ -67,6 +77,21 @@ export default function Header() {
       setSelectedFile(file);
       setImageFileUrl(URL.createObjectURL(file));
     }
+  }
+
+  async function submitHandler() {
+    setPostIsUploading(true);
+
+    await addDoc(collection(db, "posts"), {
+      username: session.user.username,
+      caption,
+      profileImg: session.user.image,
+      image: imageFileUrl,
+      timestamp: serverTimestamp(),
+    });
+
+    setPostIsUploading(false);
+    setIsOpen(false);
   }
 
   return (
@@ -157,10 +182,17 @@ export default function Header() {
               maxLength="150"
               placeholder="Please enter your caption..."
               className="border my-4 text-center w-full focus:ring-0 outline-none p-1"
+              onChange={(event) => setCaption(event.target.value)}
             />
             <button
-              disabled
+              disabled={
+                !selectedFile ||
+                caption.trim() === "" ||
+                postIstUploading ||
+                imageIsUploading
+              }
               className="w-full bg-red-500 text-white p-2 shadow-md rounded-lg hover:brightness-105 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:hover:brightness-100"
+              onClick={submitHandler}
             >
               Upload Post
             </button>
