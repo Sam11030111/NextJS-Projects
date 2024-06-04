@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import Like from "./Like";
 
 export default function Post({ post }) {
   return (
@@ -23,6 +24,7 @@ export default function Post({ post }) {
         alt={post.caption}
         className="w-full object-cover"
       />
+      <Like id={post.id} />
       <p className="p-5 truncate">
         <span className="font-bold mr-2">{post.username}</span>
         {post.caption}
