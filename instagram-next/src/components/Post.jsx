@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import Like from "./Like";
+import Comment from "./Comment";
 
 export default function Post({ post }) {
   return (
@@ -29,6 +30,7 @@ export default function Post({ post }) {
         <span className="font-bold mr-2">{post.username}</span>
         {post.caption}
       </p>
+      <Comment id={post.id} />
     </div>
   );
 }
