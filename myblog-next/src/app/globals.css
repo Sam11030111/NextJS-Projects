@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: white;
+  --menuBg: rgb(199 210 254);
+  --textColor: rgb(23 37 84);
+  --softBg: rgb(224 231 255);
+  --softTextColor: #626262;
+  --btn: #0f172a;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.dark {
+  --bg: #0f172a;
+  --menuBg: #0f172a;
+  --textColor: white;
+  --softBg: rgb(23 37 84);
+  --softTextColor: #a6a6a6;
+  --btn: white;
+}
