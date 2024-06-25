@@ -19,7 +19,7 @@
 
 .dark {
   --bg: #0f172a;
-  --menuBg: #0f172a;
+  --menuBg: rgb(30 64 175);
   --textColor: white;
   --softBg: rgb(23 37 84);
   --softTextColor: #a6a6a6;

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 
 import { IoMenu } from "react-icons/io5";
@@ -16,14 +15,14 @@ const AuthLinks = () => {
   return (
     <>
       {status === "authenticated" ? (
-        <Link className="hidden sm:flex" href="/login">
+        <SingleLink className="hidden sm:flex" href="/login">
           Login
-        </Link>
+        </SingleLink>
       ) : (
         <>
-          <Link className="hidden sm:flex" href="/write">
+          <SingleLink className="hidden sm:flex" href="/write">
             Write
-          </Link>
+          </SingleLink>
           <span className="cursor-pointer hidden sm:flex bg-red-300 py-1 px-2 rounded-lg text-white">
             Logout
           </span>

@@ -18,7 +18,7 @@ const Navbar = () => {
       <div className="flex-1 text-left text-md sm:text-xl lg:text-center md:text-2xl font-bold">
         SamLee Blog
       </div>
-      <div className="flex items-center justify-end gap-2 xl:gap-4 flex-1 text-lg xl:text-xl">
+      <div className="flex items-center justify-end gap-4 xl:gap-4 flex-1 text-lg xl:text-xl">
         <ThemeToggle />
         <SingleLink href="/">Home</SingleLink>
         <SingleLink href="/about">About</SingleLink>
