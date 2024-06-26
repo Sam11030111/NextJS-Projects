@@ -9,6 +9,7 @@
   --softBg: rgb(224 231 255);
   --softTextColor: #626262;
   --btn: #0f172a;
+  --loginBg: rgb(221 214 254);
 }
 
 * {
@@ -24,4 +25,13 @@
   --softBg: rgb(23 37 84);
   --softTextColor: #a6a6a6;
   --btn: white;
+  --loginBg: rgb(49 46 129);
+}
+
+.ql-container {
+  font-size: 28px !important;
+}
+
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  color: #b3b3b1;
 }
