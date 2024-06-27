@@ -19,6 +19,11 @@ const getPostsData = async (page, cat) => {
 const CardList = async ({ page, cat }) => {
   const { posts, count } = await getPostsData(page, cat);
 
+  const POST_PER_PAGE = 2;
+
+  const hasPrev = POST_PER_PAGE * (page - 1) > 0;
+  const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
+
   return (
     <div className="flex-5">
       <h1 className="my-[30px] text-xl font-bold">Recent Posts</h1>
@@ -27,7 +32,7 @@ const CardList = async ({ page, cat }) => {
           <Card post={post} key={post._id} />
         ))}
       </div>
-      <Pagination />
+      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
     </div>
   );
 };

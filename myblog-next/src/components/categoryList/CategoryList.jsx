@@ -42,7 +42,7 @@ const CategoryList = async () => {
         {data.map((category) => (
           <Link
             className="flex items-center gap-2 w-[100%] sm:w-[45%] md:w-[25%] lg:w-[20%] xl:w-[15%] h-[80px] justify-center rounded-lg capitalize"
-            href="/blog?cat=style"
+            href={`/blog?cat=${category.slug}`}
             style={{ backgroundColor: getCategoryColor(category.slug) }}
           >
             <Image
