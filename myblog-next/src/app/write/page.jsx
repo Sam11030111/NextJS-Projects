@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import { CiCirclePlus } from "react-icons/ci";
 import { BsCardImage } from "react-icons/bs";
 import { BiExport } from "react-icons/bi";
@@ -8,6 +11,14 @@ import { GoVideo } from "react-icons/go";
 
 const WritePage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   return (
     <div>

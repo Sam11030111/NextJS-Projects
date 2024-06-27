@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 import { IoMenu } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
@@ -9,12 +10,11 @@ import SingleLink from "../singleLink/SingleLink";
 const AuthLinks = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // temporary
-  const status = "unauthenticated";
+  const { status } = useSession();
 
   return (
     <>
-      {status === "authenticated" ? (
+      {status === "unauthenticated" ? (
         <SingleLink className="hidden sm:flex" href="/login">
           Login
         </SingleLink>
@@ -23,7 +23,10 @@ const AuthLinks = () => {
           <SingleLink className="hidden sm:flex" href="/write">
             Write
           </SingleLink>
-          <span className="cursor-pointer hidden sm:flex bg-red-300 py-1 px-2 rounded-lg text-white">
+          <span
+            onClick={signOut}
+            className="cursor-pointer hidden sm:flex bg-red-300 py-1 px-2 rounded-lg text-white"
+          >
             Logout
           </span>
         </>
